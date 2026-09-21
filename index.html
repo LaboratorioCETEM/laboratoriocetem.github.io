@@ -156,13 +156,24 @@
             border: 1px solid #E1E5EA;
             display: flex;
             flex-direction: column;
-            border-top: 4px solid var(--cetem-blue);
         }
 
-        .service-img {
-            height: 200px;
-            background-size: cover;
+        /* Contenedor con fondo blanco y la línea azul divisoria por debajo del icono */
+        .service-img-contain {
+            height: 220px;
+            background-size: contain;
             background-position: center;
+            background-repeat: no-repeat;
+            background-origin: content-box;
+            padding: 0.5rem;
+            background-color: var(--cetem-white);
+            border-bottom: 3px solid var(--cetem-blue);
+        }
+
+        /* Reducción del icono RF mediante padding interno */
+        #img-rf {
+            background-size: contain;
+            padding: 1.8rem;
         }
 
         .service-body { 
@@ -529,15 +540,15 @@
         <h2 class="title">Nuestros servicios</h2>
         <div class="services-grid">
             <div class="service-card">
-                <div class="service-img" style="background-image: url('servicio_conformidad.jpg');"></div>
+                <div class="service-img-contain" style="background-image: url('servicio_evaluacion.png');"></div>
                 <div class="service-body">
-                    <h3>Ensayos de conformidad</h3>
+                    <h3>Evaluación de productos</h3>
                     <p>Realizamos ensayos de compatibilidad electromagnética (EMC) de acuerdo con normas y métodos de ensayo reconocidos internacionalmente, evaluando las emisiones electromagnéticas y la inmunidad de los productos frente a diferentes perturbaciones.</p>
                     <p style="margin-top: 0.8rem;">Contamos con infraestructura y equipamiento especializado para realizar evaluaciones orientadas al cumplimiento de los requisitos técnicos y regulatorios aplicables a distintos tipos de productos.</p>
                 </div>
             </div>
             <div class="service-card">
-                <div class="service-img" style="background-image: url('Asistencia.png');"></div>
+                <div class="service-img-contain" style="background-image: url('servicio_precompliance.png');"></div>
                 <div class="service-body">
                     <h3>Pre-compliance y asistencia técnica</h3>
                     <p>Ofrecemos ensayos de pre-cumplimiento que permiten evaluar el desempeño electromagnético de un producto antes de realizar los ensayos de conformidad, facilitando la detección temprana de posibles problemas de emisiones o inmunidad.</p>
@@ -545,7 +556,7 @@
                 </div>
             </div>
             <div class="service-card">
-                <div class="service-img" style="background-image: url('servicio_rf.jpg');"></div>
+                <div id="img-rf" class="service-img-contain" style="background-image: url('servicio_rf.png');"></div>
                 <div class="service-body">
                     <h3>RADIOFRECUENCIA</h3>
                     <p>Contamos con equipamiento especializado para realizar mediciones de RF en un amplio rango de frecuencias, con trazabilidad metrológica y criterios técnicos que permiten obtener resultados confiables y reproducibles, de acuerdo con las características de cada aplicación.</p>
