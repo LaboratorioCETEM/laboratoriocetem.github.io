@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorio CETEM - Compatibilidad Electromagnética y RF</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+        :root {
+            /* Colores Oficiales del Manual de Marca CETEM */
+            --cetem-blue: #005CAB;       /* Pantone 2728 C */
+            --cetem-cyan: #00B5CC;       /* Pantone 3125 C */
+            --cetem-orange: #F47D30;     /* Pantone 1655 C */
+            --cetem-gray-dark: #22252A;  /* Variante oscura basada en Cool Gray 11 C */
+            --cetem-gray: #717073;       /* Pantone COOL GRAY 11 C */
+            --cetem-gray-light: #F4F6F8; /* Fondo técnico claro */
+            --cetem-white: #FFFFFF;
+
+            /* Fuentes Oficiales */
+            --font-main: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-din: 'Roboto Condensed', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--cetem-gray-dark);
+            background-color: var(--cetem-gray-light);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--cetem-white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--cetem-blue);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+
+        .logo img { 
+            height: 55px; 
+            width: auto;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--cetem-gray-dark);
+            font-family: var(--font-din);
+            font-weight: 500;
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--cetem-blue);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(0, 92, 171, 0.92), rgba(34, 37, 42, 0.90)), url('SAC.jpg') center/cover;
+            color: var(--cetem-white);
+            padding: 5.5rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--cetem-blue);
+        }
+
+        .hero h1 { 
+            font-family: var(--font-din);
+            font-size: 2.3rem; 
+            max-width: 1200px; 
+            margin: 0 auto 1.2rem auto; 
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            font-weight: 700;
+            white-space: normal;
+        }
+
+        .hero-line1 {
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .hero p { 
+            font-size: 1.15rem; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            color: #E2E8F0; 
+            font-weight: 300;
+        }
+
+        .section { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 4.5rem 2rem; 
+        }
+
+        .title { 
+            text-align: center; 
+            font-family: var(--font-din);
+            font-size: 2.2rem; 
+            color: var(--cetem-blue); 
+            margin-bottom: 3rem; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--cetem-cyan);
+            margin: 0.5rem auto 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--cetem-white);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E1E5EA;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid var(--cetem-blue);
+        }
+
+        /* Contenedor general para imágenes de los servicios */
+        .service-img-contain {
+            height: 220px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-origin: content-box;
+            padding: 0.5rem;
+            background-color: var(--cetem-gray-light);
+        }
+
+        /* Reducción efectiva del icono RF mediante padding interno */
+        #img-rf {
+            background-size: contain;
+            padding: 1.8rem;
+        }
+
+        .service-body { 
+            padding: 1.8rem; 
+            flex: 1; 
+        }
+
+        .service-body h3 { 
+            color: var(--cetem-blue); 
+            font-family: var(--font-din);
+            margin-top: 0; 
+            font-size: 1.35rem; 
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+        }
+
+        .test-card {
+            background: var(--cetem-white);
+            border-radius: 6px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E1E5EA;
+            border-top: 4px solid var(--cetem-blue);
+        }
+
+        .test-card h3 {
+            color: var(--cetem-blue);
+            font-family: var(--font-din);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1.2rem;
+            border-bottom: 2px solid var(--cetem-gray-light);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .test-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .test-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #E1E5EA;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .test-list li:last-child {
+            border-bottom: none;
+        }
+
+        .test-name {
+            font-weight: 400;
+            color: var(--cetem-gray-dark);
+        }
+
+        .test-norm {
+            font-family: var(--font-din);
+            font-weight: 700;
+            color: var(--cetem-blue);
+            background: #EBF5FB;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px solid #D4E6F1;
+            white-space: nowrap;
+        }
+
+        .mosaic-gallery {
+            margin-top: 3.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .mosaic-item {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            height: 220px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E1E5EA;
+            background-color: var(--cetem-gray);
+        }
+
+        .mosaic-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .mosaic-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .mosaic-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 92, 171, 0.90));
+            color: var(--cetem-white);
+            padding: 1.5rem 1rem 0.8rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: var(--cetem-white);
+            padding: 1.8rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--cetem-blue);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border-top: 1px solid #E1E5EA;
+            border-right: 1px solid #E1E5EA;
+            border-bottom: 1px solid #E1E5EA;
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-din);
+            color: var(--cetem-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .feature-card a {
+            color: var(--cetem-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .feature-card a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-box {
+            background: var(--cetem-gray-dark);
+            color: var(--cetem-white);
+            border-radius: 8px;
+            padding: 3rem;
+            max-width: 750px;
+            margin: 0 auto;
+            border-top: 4px solid var(--cetem-blue);
+        }
+
+        .contact-box h2 {
+            font-family: var(--font-din);
+            font-size: 2rem;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            color: var(--cetem-white);
+        }
+
+        .contact-box a {
+            color: #4A90E2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-box a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-icon-text {
+            white-space: nowrap;
+        }
+
+        .contact-box label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .contact-box input, .contact-box textarea {
+            width: 100%; 
+            padding: 0.8rem; 
+            margin-top: 0.4rem; 
+            border-radius: 4px; 
+            border: 1px solid #333A42; 
+            background-color: #181A1D;
+            color: var(--cetem-white);
+            font-family: var(--font-main);
+            box-sizing: border-box;
+        }
+
+        .contact-box input:focus, .contact-box textarea:focus {
+            outline: 1px solid var(--cetem-blue);
+        }
+
+        .btn-submit {
+            background: var(--cetem-blue); 
+            color: var(--cetem-white); 
+            padding: 0.8rem; 
+            width: 100%; 
+            border: none; 
+            border-radius: 4px; 
+            font-family: var(--font-din);
+            font-size: 1.1rem;
+            font-weight: bold; 
+            text-transform: uppercase;
+            margin-top: 1.5rem; 
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            background: #004682;
+        }
+
+        footer {
+            background: #181A1D;
+            color: var(--cetem-gray);
+            padding: 3rem 2rem 1.5rem 2rem;
+            border-top: 4px solid var(--cetem-blue);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-columns {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 3rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .footer-col-left {
+            flex: 1;
+            text-align: left;
+        }
+
+        .footer-col-left h4 {
+            color: var(--cetem-white);
+            font-family: var(--font-din);
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            margin: 0 0 0.4rem 0;
+        }
+
+        .footer-col-right {
+            flex: 1;
+            text-align: right;
+        }
+
+        .footer-col-right a {
+            color: #4A90E2;
+            text-decoration: none;
+        }
+
+        .footer-col-right a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-copy {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #2A2E33;
+            font-size: 0.85rem;
+            color: var(--cetem-gray);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .nav-links a {
+                margin: 0.2rem 0.3rem;
+                font-size: 0.8rem;
+            }
+            .hero {
+                padding: 3.5rem 1.2rem;
+            }
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            .hero-line1 {
+                white-space: normal;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .section {
+                padding: 3rem 1.2rem;
+            }
+            .services-grid, .tests-grid, .mosaic-gallery, .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .test-norm {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.4rem;
+            }
+            .contact-box {
+                padding: 1.8rem 1.2rem;
+            }
+            .contact-box h2 {
+                font-size: 1.6rem;
+            }
+            footer {
+                padding: 2.5rem 1.2rem 1.5rem 1.2rem;
+            }
+            .footer-columns {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .footer-col-left, .footer-col-right {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="Logo_LaboratorioCETEM.png" alt="Laboratorio CETEM">
+            </div>
+            <nav class="nav-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#ensayos">Ensayos</a>
+                <a href="#nosotros">Por qué elegirnos</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <h1>
+            <span class="hero-line1">Laboratorio de compatibilidad electromagnética (EMC)</span><br>
+            y radiofrecuencia (RF)
+        </h1>
+        <p>Realizamos ensayos de EMC, mediciones de RF y brindamos asistencia técnica a empresas y fabricantes durante el desarrollo y evaluación de sus productos eléctricos y electrónicos.</p>
+    </section>
+
+    <section id="servicios" class="section">
+        <h2 class="title">Nuestros servicios</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-img-contain" style="background-image: url('servicio_evaluacion.png');"></div>
+                <div class="service-body">
+                    <h3>Evaluación de productos</h3>
+                    <p>Realizamos ensayos de compatibilidad electromagnética (EMC) de acuerdo con normas y métodos de ensayo reconocidos internacionalmente, evaluando las emisiones electromagnéticas y la inmunidad de los productos frente a diferentes perturbaciones.</p>
+                    <p style="margin-top: 0.8rem;">Contamos con infraestructura y equipamiento especializado para realizar evaluaciones orientadas al cumplimiento de los requisitos técnicos y regulatorios aplicables a distintos tipos de productos.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-img-contain" style="background-image: url('servicio_precompliance.png');"></div>
+                <div class="service-body">
+                    <h3>Pre-compliance y asistencia técnica</h3>
+                    <p>Ofrecemos ensayos de pre-cumplimiento que permiten evaluar el desempeño electromagnético de un producto antes de realizar los ensayos de conformidad, facilitando la detección temprana de posibles problemas de emisiones o inmunidad.</p>
+                    <p style="margin-top: 0.8rem;">Además, brindamos asistencia técnica para la identificación y resolución de problemas de EMC, trabajando junto con el fabricante para analizar las causas de las fallas y evaluar posibles alternativas de solución.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div id="img-rf" class="service-img-contain" style="background-image: url('servicio_rf.png');"></div>
+                <div class="service-body">
+                    <h3>RADIOFRECUENCIA</h3>
+                    <p>Contamos con equipamiento especializado para realizar mediciones de RF en un amplio rango de frecuencias, con trazabilidad metrológica y criterios técnicos que permiten obtener resultados confiables y reproducibles, de acuerdo con las características de cada aplicación.</p>
+                    <p style="margin-top: 0.8rem;">Brindamos soporte a empresas, fabricantes y desarrolladores que necesitan caracterizar o evaluar señales y dispositivos de radiofrecuencia, tanto durante las etapas de desarrollo y validación como en la evaluación de sus productos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ensayos" class="section" style="background: var(--cetem-gray-light);">
+        <h2 class="title">Qué ensayos realizamos</h2>
+        
+        <div class="tests-grid">
+            <div class="test-card">
+                <h3>Emisión</h3>
+                <ul class="test-list">
+                    <li>
+                        <span class="test-name">Emisiones conducidas</span>
+                        <span class="test-norm">CISPR 11 / CISPR 32</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Emisiones radiadas</span>
+                        <span class="test-norm">CISPR 11 / CISPR 32</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Emisiones de corriente armónica</span>
+                        <span class="test-norm">IEC 61000-3-2</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Fluctuaciones de tensión y flicker</span>
+                        <span class="test-norm">IEC 61000-3-3</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h3>Inmunidad</h3>
+                <ul class="test-list">
+                    <li>
+                        <span class="test-name">Descargas electrostáticas</span>
+                        <span class="test-norm">IEC 61000-4-2</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Campos electromagnéticos radiados de RF</span>
+                        <span class="test-norm">IEC 61000-4-3</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Transitorios eléctricos rápidos en ráfagas</span>
+                        <span class="test-norm">IEC 61000-4-4</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Ondas de choque</span>
+                        <span class="test-norm">IEC 61000-4-5</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Perturbaciones conducidas de RF</span>
+                        <span class="test-norm">IEC 61000-4-6</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Campos magnéticos a la frecuencia de red</span>
+                        <span class="test-norm">IEC 61000-4-8</span>
+                    </li>
+                    <li>
+                        <span class="test-name">Huecos de tensión e interrupciones breves</span>
+                        <span class="test-norm">IEC 61000-4-11</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mosaic-gallery">
+            <div class="mosaic-item">
+                <img src="camara_semianecoica.jpg" alt="Cámara semianecoica">
+                <div class="mosaic-caption">Cámara semianecoica para ensayos radiados</div>
+            </div>
+            <div class="mosaic-item">
+                <img src="Descargas.jpg" alt="Generador de descargas electrostáticas (ESD)">
+                <div class="mosaic-caption">Generador de descargas electrostáticas (ESD)</div>
+            </div>
+            <div class="mosaic-item">
+                <img src="Transitorios.jpg" alt="Generador de perturbaciones transitorias">
+                <div class="mosaic-caption">Generador de perturbaciones transitorias</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="nosotros" class="section">
+        <h2 class="title">Por qué elegirnos</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>Calidad y confianza técnica</h3>
+                <p>Desarrollamos nuestras actividades conforme a los requisitos de la norma ISO/IEC 17025 y contamos con el reconocimiento del Organismo Argentino de Acreditación (OAA), de acuerdo con el alcance vigente publicado por dicho organismo en <a href="https://www.oaa.org.ar" target="_blank" rel="noopener">www.oaa.org.ar</a>.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Experiencia</h3>
+                <p>Contamos con amplia experiencia en ensayos de compatibilidad electromagnética y un sólido conocimiento de las normas de EMC, lo que nos permite identificar los requisitos técnicos aplicables a cada tipo de producto.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Enfoque técnico</h3>
+                <p>No nos limitamos a detectar una falla: buscamos comprender el problema, identificar sus causas y aportar herramientas para su solución.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Imparcialidad y confidencialidad</h3>
+                <p>Garantizamos un enfoque imparcial y objetivo en nuestras actividades, preservando la confidencialidad de la información y de los resultados obtenidos durante los ensayos.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Atención personalizada</h3>
+                <p>Brindamos soporte a nuestros clientes desde las etapas de desarrollo hasta la evaluación final del producto, con comunicación directa y respuestas claras y precisas.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Plazos competitivos</h3>
+                <p>Planificamos los ensayos de acuerdo con las necesidades de cada proyecto, ofreciendo plazos competitivos sin comprometer la calidad y confiabilidad de los resultados.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="section">
+        <div class="contact-box">
+            <h2>Contactanos</h2>
+            <p style="text-align: center; margin-bottom: 1.5rem;">
+                <a href="https://maps.app.goo.gl/DLJ2x6k4rYc4ZpjR6" target="_blank"><span class="contact-icon-text">📍 Parque</span> industrial PITEC - Calle 1236 N° 960, Ing. Allan, Buenos Aires, Argentina</a><br><br>
+                ✉ <a href="mailto:emc@cetem.org.ar">emc@cetem.org.ar</a> | 
+                💬 <a href="https://wa.me/5491156578956" target="_blank">+54 9 11 5657-8956</a>
+            </p>
+            
+            <div style="width: 100%; height: 220px; margin-bottom: 1.5rem; border-radius: 6px; overflow: hidden; border: 1px solid #333A42;">
+                <iframe 
+                    src="https://maps.google.com/maps?q=-34.84722988910006,-58.193697894217856&z=17&output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+
+            <form action="https://formsubmit.co/emc@cetem.org.ar" method="POST">
+                <!-- Configuración oculta de FormSubmit -->
+                <input type="hidden" name="_subject" value="Nueva consulta de servicios - Web CETEM">
+                <input type="hidden" name="_replyto" value="email">
+                <input type="hidden" name="_captcha" value="false">
+
+                <!-- Campos de entrada de datos -->
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="Nombre" placeholder="Tu nombre completo" required>
+
+                <label for="empresa">Empresa</label>
+                <input type="text" id="empresa" name="Empresa" placeholder="Nombre de tu empresa u organización">
+
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" name="Email" placeholder="ejemplo@dominio.com" required>
+
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="Mensaje" rows="4" placeholder="Escribí aquí tu consulta técnica o solicitud de ensayo..." required></textarea>
+
+                <button type="submit" class="btn-submit">Enviar consulta</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-columns">
+                <div class="footer-col-left">
+                    <h4>Laboratorio CETEM</h4>
+                    <p>Área de servicios del Centro Tecnológico Metalúrgico CETEM</p>
+                </div>
+                <div class="footer-col-right">
+                    <p>Parque Industrial y Tecnológico Florencio Varela (PITEC)<br>
+                    Calle 1236 N° 960 · Ing. J. Allan · Buenos Aires · Argentina</p>
+                    <p style="margin-top: 0.5rem;">
+                        <a href="mailto:emc@cetem.org.ar">emc@cetem.org.ar</a><br>
+                        <a href="https://wa.me/5491156578956" target="_blank">+54 9 11 5657-8956</a>
+                    </p>
+                </div>
+            </div>
+            <div class="footer-copy">
+                © 2026 Centro Tecnológico Metalúrgico CETEM. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
