@@ -144,7 +144,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 2rem;
         }
 
@@ -172,6 +172,12 @@
 
         /* Reducción del icono RF mediante padding interno */
         #img-rf {
+            background-size: contain;
+            padding: 1.8rem;
+        }
+
+        /* Ajuste del icono de calibración para igualar su escala visual con los demás servicios */
+        #img-calibracion {
             background-size: contain;
             padding: 1.8rem;
         }
@@ -558,9 +564,17 @@
             <div class="service-card">
                 <div id="img-rf" class="service-img-contain" style="background-image: url('servicio_rf.png');"></div>
                 <div class="service-body">
-                    <h3>RADIOFRECUENCIA</h3>
+                    <h3>MEDICIONES DE RF</h3>
                     <p>Contamos con equipamiento especializado para realizar mediciones de RF en un amplio rango de frecuencias, con trazabilidad metrológica y criterios técnicos que permiten obtener resultados confiables y reproducibles, de acuerdo con las características de cada aplicación.</p>
                     <p style="margin-top: 0.8rem;">Brindamos soporte a empresas, fabricantes y desarrolladores que necesitan caracterizar o evaluar señales y dispositivos de radiofrecuencia, tanto durante las etapas de desarrollo y validación como en la evaluación de sus productos.</p>
+                </div>
+            </div>
+            <div class="service-card">
+                <div id="img-calibracion" class="service-img-contain" style="background-image: url('servicio_calibracion.png');"></div>
+                <div class="service-body">
+                    <h3>CALIBRACIÓN DE INSTRUMENTAL</h3>
+                    <p>Realizamos calibraciones y verificaciones de instrumental electrónico y de radiofrecuencia, mediante equipamiento patrón con trazabilidad metrológica y procedimientos técnicos adaptados a las características de cada instrumento y a las magnitudes evaluadas.</p>
+                    <p style="margin-top: 0.8rem;">Contamos con equipamiento calibrado para la generación y medición de magnitudes eléctricas, señales de radiofrecuencia y formas de onda, lo que nos permite brindar servicios de calibración y verificación para una amplia variedad de instrumentos utilizados en laboratorios y en actividades de ensayo, medición, desarrollo y validación.</p>
                 </div>
             </div>
         </div>
@@ -637,8 +651,8 @@
                 <div class="mosaic-caption">Generador de descargas electrostáticas (ESD)</div>
             </div>
             <div class="mosaic-item">
-                <img src="Transitorios.jpg" alt="Generador de perturbaciones transitorias">
-                <div class="mosaic-caption">Generador de perturbaciones transitorias</div>
+                <img src="Receptor.jpg" alt="Receptor de interferencias (EMI)">
+                <div class="mosaic-caption">Receptor de interferencias (EMI)</div>
             </div>
         </div>
     </section>
