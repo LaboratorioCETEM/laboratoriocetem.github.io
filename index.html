@@ -158,7 +158,6 @@
             flex-direction: column;
         }
 
-        /* Contenedor con fondo blanco y la línea azul divisoria por debajo del icono */
         .service-img-contain {
             height: 220px;
             background-size: contain;
@@ -170,13 +169,11 @@
             border-bottom: 3px solid var(--cetem-blue);
         }
 
-        /* Reducción del icono RF mediante padding interno */
         #img-rf {
             background-size: contain;
             padding: 1.8rem;
         }
 
-        /* Ajuste del icono de calibración para igualar su escala visual con los demás servicios */
         #img-calibracion {
             background-size: contain;
             padding: 1.8rem;
@@ -711,7 +708,6 @@
             <form action="https://formsubmit.co/emc@cetem.org.ar" method="POST">
                 <!-- Configuración oculta de FormSubmit -->
                 <input type="hidden" name="_subject" value="Nueva consulta de servicios - Web CETEM">
-                <input type="hidden" name="_replyto" value="email">
                 <input type="hidden" name="_captcha" value="false">
 
                 <!-- Campos de entrada de datos -->
@@ -722,7 +718,7 @@
                 <input type="text" id="empresa" name="Empresa" placeholder="Nombre de tu empresa u organización">
 
                 <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="Email" placeholder="ejemplo@dominio.com" required>
+                <input type="email" id="email" name="Correo de Contacto" placeholder="ejemplo@dominio.com" required>
 
                 <label for="mensaje">Mensaje</label>
                 <textarea id="mensaje" name="Mensaje" rows="4" placeholder="Escribí aquí tu consulta técnica o solicitud de ensayo..." required></textarea>
