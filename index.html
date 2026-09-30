@@ -407,6 +407,28 @@
             background: #004682;
         }
 
+        .form-status {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .form-status.success {
+            display: block;
+            background: #E8F5E9;
+            color: #1B5E20;
+            border: 1px solid #A5D6A7;
+        }
+
+        .form-status.error {
+            display: block;
+            background: #FDECEC;
+            color: #8B1E1E;
+            border: 1px solid #E7A8A8;
+        }
+
         footer {
             background: #181A1D;
             color: var(--cetem-gray);
@@ -705,25 +727,22 @@
                 </iframe>
             </div>
 
-            <form action="https://formsubmit.co/emc@cetem.org.ar" method="POST">
-                <!-- Configuración oculta de FormSubmit -->
-                <input type="hidden" name="_subject" value="Nueva consulta de servicios - Web CETEM">
-                <input type="hidden" name="_captcha" value="false">
-
-                <!-- Campos de entrada de datos -->
+            <form id="contact-form" method="POST">
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="Nombre" placeholder="Tu nombre completo" required>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
 
                 <label for="empresa">Empresa</label>
-                <input type="text" id="empresa" name="Empresa" placeholder="Nombre de tu empresa u organización">
+                <input type="text" id="empresa" name="empresa" placeholder="Nombre de tu empresa u organización">
 
                 <label for="email">Correo electrónico</label>
-                <input type="email" id="email" name="Correo de Contacto" placeholder="ejemplo@dominio.com" required>
+                <input type="email" id="email" name="email" placeholder="ejemplo@dominio.com" required>
 
                 <label for="mensaje">Mensaje</label>
-                <textarea id="mensaje" name="Mensaje" rows="4" placeholder="Escribí aquí tu consulta técnica o solicitud de ensayo..." required></textarea>
+                <textarea id="mensaje" name="message" rows="4" placeholder="Escribí aquí tu consulta técnica o solicitud de ensayo..." required></textarea>
 
-                <button type="submit" class="btn-submit">Enviar consulta</button>
+                <input type="hidden" name="subject" value="Nueva consulta de servicios - Web CETEM">
+                <button type="submit" class="btn-submit" id="submit-button">Enviar consulta</button>
+                <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
             </form>
         </div>
     </section>
@@ -749,5 +768,45 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Formspree: reemplazar YOUR_FORM_ID por el ID del formulario creado en formspree.io.
+        // En Formspree, configurar emc@cetem.org.ar como Target Email.
+        const contactForm = document.getElementById('contact-form');
+        const formStatus = document.getElementById('form-status');
+        const submitButton = document.getElementById('submit-button');
+        const formspreeEndpoint = 'https://formspree.io/f/xnpnwlne';
+
+        contactForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            formStatus.className = 'form-status';
+            formStatus.textContent = '';
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+
+            try {
+                const response = await fetch(formspreeEndpoint, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    formStatus.className = 'form-status success';
+                    formStatus.innerHTML = '<strong>Consulta enviada correctamente.</strong><br>Gracias por contactarnos. Nos comunicaremos a la brevedad.';
+                    contactForm.reset();
+                } else {
+                    formStatus.className = 'form-status error';
+                    formStatus.textContent = 'No pudimos enviar la consulta. Por favor, intentá nuevamente o escribinos a emc@cetem.org.ar.';
+                }
+            } catch (error) {
+                formStatus.className = 'form-status error';
+                formStatus.textContent = 'No pudimos enviar la consulta. Por favor, verificá tu conexión e intentá nuevamente.';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Enviar consulta';
+            }
+        });
+    </script>
 </body>
 </html>
